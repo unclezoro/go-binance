@@ -23,6 +23,7 @@ type CreateOrderService struct {
 	stopPrice               *string
 	trailingDelta           *string
 	icebergQuantity         *string
+	pegOffsetValue          *int64
 	selfTradePreventionMode *SelfTradePreventionMode
 }
 
@@ -43,6 +44,13 @@ func (s *CreateOrderService) Type(orderType OrderType) *CreateOrderService {
 	s.orderType = orderType
 	return s
 }
+
+// TimeInForce set timeInForce
+func (s *CreateOrderService) PegOffsetValue(value int64) *CreateOrderService {
+	s.pegOffsetValue = &value
+	return s
+}
+
 
 // TimeInForce set timeInForce
 func (s *CreateOrderService) TimeInForce(timeInForce TimeInForceType) *CreateOrderService {
@@ -117,6 +125,10 @@ func (s *CreateOrderService) createOrder(ctx context.Context, endpoint string, o
 	}
 	if s.quantity != nil {
 		m["quantity"] = *s.quantity
+	}
+	if s.pegOffsetValue != nil{
+		m["pegOffsetValue"] = *s.pegOffsetValue
+		m["pegOffsetType"] = "PRICE_LEVEL"
 	}
 	if s.quoteOrderQty != nil {
 		m["quoteOrderQty"] = *s.quoteOrderQty
