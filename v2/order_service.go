@@ -129,6 +129,7 @@ func (s *CreateOrderService) createOrder(ctx context.Context, endpoint string, o
 	if s.pegOffsetValue != nil{
 		m["pegOffsetValue"] = *s.pegOffsetValue
 		m["pegOffsetType"] = "PRICE_LEVEL"
+		m["pegPriceType"] = "PRIMARY_PEG"
 	}
 	if s.quoteOrderQty != nil {
 		m["quoteOrderQty"] = *s.quoteOrderQty
